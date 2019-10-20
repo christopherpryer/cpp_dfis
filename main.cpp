@@ -44,13 +44,13 @@ void printMatrix(const matrix &M)
 𝑑𝑛 : number of demands
 𝐴𝐷𝐼 : Average Demand Interval
 */
-double calculateADI(matrix &M, int qCol)
+double calculateADI(matrix M, int qCol)
 {
    int rowCount = 0;
    int numPeriods = 0;
    int numDemands = 0;
 
-   for (vec &row: M)
+   for (vec row: M)
    {
       if (rowCount > 0)
       {
@@ -69,13 +69,13 @@ double calculateADI(matrix &M, int qCol)
 𝜇𝑝: average of population
 𝐶𝑉2: coefficient of variation
 */
-double calculateCV2(matrix &M, int qCol)
+double calculateCV2(matrix M, int qCol)
 {
    int rowCount = 0;
    int total = 0;
    int count = 0;
 
-   for (vec &row: M)
+   for (vec row: M)
    {
        if (rowCount > 0)
       {
@@ -88,7 +88,7 @@ double calculateCV2(matrix &M, int qCol)
    rowCount = 0;
    float var = 0.0;
    float mean = (float)total/(float)count;
-   for (vec &row: M)
+   for (vec row: M)
    {
        if (rowCount > 0)
       {
@@ -102,6 +102,18 @@ double calculateCV2(matrix &M, int qCol)
    return pow((sqrt(var)/mean), 2);;
 }
 
+bool isSmooth(float adi, float cv2)
+{
+   if ((adi < 1.32) && (cv2 < 0.49))
+   {
+      return true;
+   }
+   else 
+   {
+      return false;
+   }
+}
+
 int main()
 {
    matrix data = readCSV("test_data.csv");
@@ -113,10 +125,5 @@ int main()
    printf("adi:\t%f\n", adi);
    printf("cv2:\t%f\n", cv2);
    
-   bool isSmooth = false;
-   if ((adi < 1.32) && (cv2 < 0.49))
-   {
-      isSmooth = true;
-   }
-   printf("is smooth:\t%i\n", isSmooth);
+   printf("is smooth:\t%i\n", isSmooth(adi, cv2));
 }

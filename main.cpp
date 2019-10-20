@@ -3,6 +3,7 @@
 #include <fstream>
 #include <sstream>
 #include <vector>
+#include <math.h>
 using namespace std;
 
 using vec = vector<string>;
@@ -35,14 +36,14 @@ void printMatrix(const matrix &M)
    }
 }
 
-void calculateADI(matrix &M, int pCol, int qCol)
+/*
+𝐴𝐷𝐼=𝑝𝑛/𝑑𝑛
+𝑝𝑛 : number of periods
+𝑑𝑛 : number of demands
+𝐴𝐷𝐼 : Average Demand Interval
+*/
+double calculateADI(matrix &M, int qCol)
 {
-   /*
-    𝐴𝐷𝐼=𝑝𝑛/𝑑𝑛
-    𝑝𝑛 : number of periods
-    𝑑𝑛 : number of demands
-    𝐴𝐷𝐼 : Average Demand Interval
-    */
    int rowCount = 0;
    float adi;
    int numPeriods = 0;
@@ -59,7 +60,46 @@ void calculateADI(matrix &M, int pCol, int qCol)
    }
 
    adi = (float)numPeriods/(float)numDemands;
-   printf("adi:\t%f\n", adi);
+   return adi;
+}
+
+/*
+𝐶𝑉2=(𝜎𝑝/𝜇𝑝)2
+𝜎𝑝: standard deviation of population
+𝜇𝑝: average of population
+𝐶𝑉2: coefficient of variation
+*/
+double calculateCV2(matrix &M, int qCol)
+{
+   int rowCount = 0;
+   int total = 0;
+   int count = 0;
+   for (vec &row: M)
+   {
+       if (rowCount > 0)
+      {
+         total+=std::stoi(row[2]);
+         count++;
+      }
+      rowCount++;
+   }
+
+   rowCount = 0;
+   float var = 0.0;
+   float mean = (float)total/(float)count;
+   for (vec &row: M)
+   {
+       if (rowCount > 0)
+      {
+         int val = std::stoi(row[2]); 
+         var += (val - mean) * (val - mean);
+      }
+      rowCount++;
+   }
+
+   var /= count;
+   float cv2 = pow((sqrt(var)/mean), 2);
+   return cv2;
 }
 
 int main()
@@ -67,5 +107,16 @@ int main()
    matrix data = readCSV("test_data.csv");
    
    printMatrix(data);
-   calculateADI(data, 1, 2);
+   float adi = calculateADI(data, 2);
+   float cv2 = calculateCV2(data, 2);
+
+   printf("adi:\t%f\n", adi);
+   printf("cv2:\t%f\n", cv2);
+   
+   bool isSmooth = false;
+   if ((adi < 1.32) && (cv2 < 9.49))
+   {
+      isSmooth = true;
+   }
+   printf("is smooth:\t%i\n", isSmooth);
 }

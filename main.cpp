@@ -35,24 +35,6 @@ void printMatrix(const matrix &M)
    }
 }
 
-void deleteRow(matrix &M, int row)
-{
-   if (row < M.size()) M.erase(M.begin() + row);
-}
-
-void deleteCol(matrix &M, int col)
-{
-   for (vec &row: M)
-   {
-      if (col < row.size()) row.erase(row.begin() + col);
-   }
-}
-
-void edit(matrix &M, int i, int j, string value)
-{
-   if (i < M.size() && j < M[i].size()) M[i][j] = value;
-}
-
 void calculateADI(matrix &M, int pCol, int qCol)
 {
    int rowCount = 0;

@@ -37,6 +37,12 @@ void printMatrix(const matrix &M)
 
 void calculateADI(matrix &M, int pCol, int qCol)
 {
+   /*
+    𝐴𝐷𝐼=𝑝𝑛/𝑑𝑛
+    𝑝𝑛 : number of periods
+    𝑑𝑛 : number of demands
+    𝐴𝐷𝐼 : Average Demand Interval
+    */
    int rowCount = 0;
    float adi;
    int numPeriods = 0;

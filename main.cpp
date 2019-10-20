@@ -36,6 +36,8 @@ void printMatrix(const matrix &M)
    }
 }
 
+
+
 /*
 𝐴𝐷𝐼=𝑝𝑛/𝑑𝑛
 𝑝𝑛 : number of periods
@@ -45,7 +47,6 @@ void printMatrix(const matrix &M)
 double calculateADI(matrix &M, int qCol)
 {
    int rowCount = 0;
-   float adi;
    int numPeriods = 0;
    int numDemands = 0;
 
@@ -59,8 +60,7 @@ double calculateADI(matrix &M, int qCol)
       rowCount++;
    }
 
-   adi = (float)numPeriods/(float)numDemands;
-   return adi;
+   return (float)numPeriods/(float)numDemands;
 }
 
 /*
@@ -74,6 +74,7 @@ double calculateCV2(matrix &M, int qCol)
    int rowCount = 0;
    int total = 0;
    int count = 0;
+
    for (vec &row: M)
    {
        if (rowCount > 0)
@@ -98,8 +99,7 @@ double calculateCV2(matrix &M, int qCol)
    }
 
    var /= count;
-   float cv2 = pow((sqrt(var)/mean), 2);
-   return cv2;
+   return pow((sqrt(var)/mean), 2);;
 }
 
 int main()

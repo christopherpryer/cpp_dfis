@@ -54,7 +54,7 @@ double calculateADI(matrix &M, int qCol)
       if (rowCount > 0)
       {
          numPeriods++;
-         numDemands+=std::stoi(row[2]);
+         numDemands+=std::stoi(row[qCol]);
       }
       rowCount++;
    }
@@ -78,7 +78,7 @@ double calculateCV2(matrix &M, int qCol)
    {
        if (rowCount > 0)
       {
-         total+=std::stoi(row[2]);
+         total+=std::stoi(row[qCol]);
          count++;
       }
       rowCount++;
@@ -91,7 +91,7 @@ double calculateCV2(matrix &M, int qCol)
    {
        if (rowCount > 0)
       {
-         int val = std::stoi(row[2]); 
+         int val = std::stoi(row[qCol]); 
          var += (val - mean) * (val - mean);
       }
       rowCount++;
@@ -106,9 +106,9 @@ int main()
 {
    matrix data = readCSV("test_data.csv");
    
-   printMatrix(data);
-   float adi = calculateADI(data, 2);
-   float cv2 = calculateCV2(data, 2);
+   //printMatrix(data);
+   float adi = calculateADI(data, 1);
+   float cv2 = calculateCV2(data, 1);
 
    printf("adi:\t%f\n", adi);
    printf("cv2:\t%f\n", cv2);

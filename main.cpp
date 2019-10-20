@@ -53,9 +53,31 @@ void edit(matrix &M, int i, int j, string value)
    if (i < M.size() && j < M[i].size()) M[i][j] = value;
 }
 
+void calculateADI(matrix &M, int pCol, int qCol)
+{
+   int rowCount = 0;
+   float adi;
+   int numPeriods = 0;
+   int numDemands = 0;
+
+   for (vec &row: M)
+   {
+      if (rowCount > 0)
+      {
+         numPeriods++;
+         numDemands+=std::stoi(row[2]);
+      }
+      rowCount++;
+   }
+
+   adi = (float)numPeriods/(float)numDemands;
+   printf("%f\n", adi);
+}
+
 int main()
 {
    matrix data = readCSV("test_data.csv");
-   deleteCol(data, 0);
+   
    printMatrix(data);
+   calculateADI(data, 1, 2);
 }

@@ -114,7 +114,7 @@ int main()
    printf("cv2:\t%f\n", cv2);
    
    bool isSmooth = false;
-   if ((adi < 1.32) && (cv2 < 9.49))
+   if ((adi < 1.32) && (cv2 < 0.49))
    {
       isSmooth = true;
    }

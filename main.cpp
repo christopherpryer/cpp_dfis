@@ -53,7 +53,7 @@ void calculateADI(matrix &M, int pCol, int qCol)
    }
 
    adi = (float)numPeriods/(float)numDemands;
-   printf("%f\n", adi);
+   printf("adi:\t%f\n", adi);
 }
 
 int main()
